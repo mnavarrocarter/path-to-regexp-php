@@ -1,0 +1,46 @@
+{
+	"name"       : "mnavarrocarter/path-to-regexp-php",
+	"type"       : "library",
+	"description": "A PHP port of Path-To-Regex JS",
+	"keywords": ["path", "regexp", "convert", "routing", "route", "match"],
+	"authors"    : [
+		{
+			"name": "Gil Polguère",
+			"email": "gpolguere@gmail.com"
+		},
+		{
+			"name": "Matias Navarro",
+			"email": "mnavarrocarter@gmail.com"
+		}
+	],
+	"license" : "MIT",
+	"require": {
+		"php": ">=7.2"
+	},
+	"autoload": {
+        "psr-4": {
+			"MNC\\PathToRegExpPHP\\": "src"
+		}
+    },
+	"autoload-dev": {
+		"psr-4": {
+			"MNC\\PathToRegExpPHP\\Tests\\": "tests"
+		}
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.0",
+		"friendsofphp/php-cs-fixer": "^2.16",
+		"vimeo/psalm": "^3.8"
+	},
+	"scripts": {
+		"lint": "php-cs-fixer fix --ansi",
+		"test:style": "php-cs-fixer fix --dry-run -vvv --ansi",
+		"test:unit": "phpunit --testdox --coverage-text",
+		"test:types": "psalm",
+		"test": [
+			"@test:types",
+			"@test:unit",
+			"@test:style"
+		]
+	}
+}
