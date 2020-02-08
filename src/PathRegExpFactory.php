@@ -33,7 +33,7 @@ class PathRegExpFactory
         $parts = [];
         $strict = ($flags & self::STRICT) !== 0 ?: false;
         $end = ($flags & self::END) !== 0 ?: false;
-        $regexpFlags = (self::CASE_SENSITIVE & $flags !== 0) ? '' : 'i';
+        $regexpFlags = ($flags & self::CASE_SENSITIVE) !== 0 ? '' : 'i';
 
         $index = 0;
 
@@ -54,7 +54,7 @@ class PathRegExpFactory
         $pathRegexp = '/'.implode('|', $pathRegexps).'/';
 
         // Alter the path string into a usable regexp.
-        $path = preg_replace_callback($pathRegexp, static function ($matches) use (&$parts, &$index) {
+        $path = preg_replace_callback($pathRegexp, static function (array $matches) use (&$parts, &$index) {
             if (count($matches) > 1) {
                 $escaped = $matches[1];
             }
@@ -109,12 +109,12 @@ class PathRegExpFactory
             $capture = preg_replace('/([=!:$\/()])/', '\1', $subject);
 
             // Allow parameters to be repeated more than once.
-            if (!empty($repeat)) {
+            if ($repeat === true) {
                 $capture = $capture.'(?:'.$prefix.$capture.')*';
             }
 
             // Allow a parameter to be optional.
-            if (!empty($optional)) {
+            if ($optional === true) {
                 return '(?:'.$prefix.'('.$capture.'))?';
             }
 

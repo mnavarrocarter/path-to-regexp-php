@@ -37,6 +37,14 @@ class MatchResult
         $this->parts = $parts;
     }
 
+    /**
+     * @return ValuedPart[]
+     */
+    public function getParts(): array
+    {
+        return $this->parts;
+    }
+
     public function getMatchedString(): string
     {
         return $this->matchedString;

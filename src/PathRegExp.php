@@ -59,7 +59,7 @@ class PathRegExp
             throw new NoMatchException(sprintf('Not match found for %s', $route));
         }
         if ($result === false) {
-            throw new MatchErrorException('Match error: '.$this->getLastError());
+            throw new MatchErrorException('Match error');
         }
         $matched = array_shift($matches);
         if (!isset($matched[0]) || !is_string($matched[0])) {
@@ -93,17 +93,5 @@ class PathRegExp
     public function getParts(): array
     {
         return $this->parts;
-    }
-
-    /**
-     * @return string
-     */
-    private function getLastError(): string
-    {
-        $callable = static function ($v) {
-            return is_int($v);
-        };
-
-        return array_flip(array_filter(get_defined_constants(true)['pcre'], $callable))[preg_last_error()];
     }
 }

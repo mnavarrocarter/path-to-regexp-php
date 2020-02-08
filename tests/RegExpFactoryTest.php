@@ -1,5 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the PathToRegExpPHP library.
+ * (c) Matías Navarro-Carter <mnavarrocarter@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace MNC\PathToRegExpPHP\Tests;
 
@@ -8,8 +16,7 @@ use MNC\PathToRegExpPHP\PathRegExpFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class RegExpFactoryTest
- * @package MNC\PathToRegExpPHP\Tests
+ * Class RegExpFactoryTest.
  */
 class RegExpFactoryTest extends TestCase
 {
@@ -19,6 +26,8 @@ class RegExpFactoryTest extends TestCase
         $this->assertCount(1, $path->getParts());
         $this->assertSame('name', $path->getParts()[0]->getName());
         $this->assertSame('/', $path->getParts()[0]->getDelimiter());
+        $this->assertFalse($path->getParts()[0]->isRepeat());
+        $this->assertFalse($path->getParts()[0]->isOptional());
         $this->assertSame('/^\/user\/([^\/]+?)(?:\/(?=$))?$/i', $path->getPattern());
     }
 
@@ -28,6 +37,12 @@ class RegExpFactoryTest extends TestCase
         $result = $path->match('/user/john');
         $this->assertSame('/user/john', $result->getMatchedString());
         $this->assertSame(['name' => 'john'], $result->getValues());
+
+        $this->assertSame('name', $result->getParts()[0]->getName());
+        $this->assertSame('/', $result->getParts()[0]->getDelimiter());
+        $this->assertFalse($result->getParts()[0]->isOptional());
+        $this->assertFalse($result->getParts()[0]->isRepeat());
+        $this->assertSame('john', $result->getParts()[0]->getValue());
     }
 
     public function testDoesNotMatch(): void

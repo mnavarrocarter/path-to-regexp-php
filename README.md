@@ -1,6 +1,8 @@
 MNC PathToRegExpPHP
 ===================
 
+[![Actions Status](https://github.com/mnavarrocarter/path-to-regexp-php/workflows/CI/badge.svg)](https://github.com/mnavarrocarter/path-to-regexp-php/actions)
+
 Turns an Express-style path string such as `/user/:name` into a regular expression,
 so it can be used in routing engines.
 
